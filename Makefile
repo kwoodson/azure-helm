@@ -1,13 +1,13 @@
 COMMIT=$(shell git rev-parse --short HEAD)$(shell [[ $$(git status --porcelain --ignored) = "" ]] && echo -clean || echo -dirty)
 
 # all is the default target to build everything
-all: clean build sync e2e-bin logbridge
+all: clean build sync e2e-bin logbridge customer-admin-controller
 
 build: generate
 	go build ./...
 
 clean:
-	rm -f azure-reader.log coverage.out end-user.log e2e.test logbridge sync
+	rm -f azure-reader.log coverage.out end-user.log e2e.test logbridge sync customer-admin-controller
 
 test: unit e2e
 
@@ -18,6 +18,8 @@ TAG ?= $(shell git rev-parse --short HEAD)
 SYNC_IMAGE ?= quay.io/openshift-on-azure/sync:$(TAG)
 LOGBRIDGE_IMAGE ?= quay.io/openshift-on-azure/logbridge:$(TAG)
 E2E_IMAGE ?= quay.io/openshift-on-azure/e2e-tests:$(TAG)
+CUSTOMER_ADMIN_CONTROLLER_IMAGE ?= quay.io/openshift-on-azure/customer-admin-controller:$(TAG)
+
 
 logbridge: generate
 	go build -ldflags "-X main.gitCommit=$(COMMIT)" ./cmd/logbridge
@@ -38,6 +40,16 @@ sync-image: sync
 
 sync-push: sync-image
 	docker push $(SYNC_IMAGE)
+
+customer-admin-controller: generate
+	go build -ldflags "-X main.gitCommit=$(COMMIT)" ./cmd/customer-admin-controller
+
+customer-admin-controller-image: customer-admin-controller
+	go get github.com/openshift/imagebuilder/cmd/imagebuilder
+	imagebuilder -f Dockerfile.customer-admin-controller -t $(CUSTOMER_ADMIN_CONTROLLER_IMAGE) .
+
+customer-admin-controller-push: customer-admin-controller-image
+	docker push $(CUSTOMER_ADMIN_CONTROLLER_IMAGE)
 
 verify:
 	./hack/validate-generated.sh

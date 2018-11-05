@@ -1,6 +1,11 @@
-hash: b32fedcaf76833c37e396ac4f3daf860a84a0a320942c7445f47fea7ff94d83f
-updated: 2018-10-24T13:16:45.475837252+02:00
+hash: 63524dd2079f2e357f34b16172def777e8eca09e37c5b3599cac51b03afb52c9
+updated: 2018-11-07T15:52:24.793657263-05:00
 imports:
+- name: cloud.google.com/go
+  version: 3b1ae45394a234c385be014e9a488f2bb6eef821
+  subpackages:
+  - compute/metadata
+  - internal
 - name: github.com/Azure/azure-sdk-for-go
   version: 4e8cbbfb1aeab140cd0fa97fd16b64ee18c3ca6a
   subpackages:
@@ -29,7 +34,7 @@ imports:
   subpackages:
   - sdjournal
 - name: github.com/coreos/pkg
-  version: 97fdf19511ea361ae1c100dd393cc47f8dcfa1e1
+  version: 399ea9e2e55f791b6e3d920860dbecb99c3692f0
   subpackages:
   - dlopen
 - name: github.com/davecgh/go-spew
@@ -39,9 +44,13 @@ imports:
 - name: github.com/dgrijalva/jwt-go
   version: 01aeca54ebda6e0fbfafd0a524d234159c05ec20
 - name: github.com/dimchansky/utfbom
-  version: 6c6132ff69f0f6c088739067407b5d32c52e1d0f
+  version: 5448fe645cb1964ba70ac8f9f2ffe975e61a536c
 - name: github.com/ghodss/yaml
   version: 0ca9ea5df5451ffdf184b4428c902747c2c11cd7
+- name: github.com/go-logr/logr
+  version: 9fb12b3b21c5415d16ac18dc5cd42c1cfdd40c4e
+- name: github.com/go-logr/zapr
+  version: 7536572e8d55209135cd5e7ccf7fce43dca217ab
 - name: github.com/go-test/deep
   version: 6592d9cc0a499ad2d5f574fde80a2b5c5cc3b4f5
 - name: github.com/gogo/protobuf
@@ -51,6 +60,10 @@ imports:
   - sortkeys
 - name: github.com/golang/glog
   version: 44145f04b68cf362d9c4df2182967c2275eaefed
+- name: github.com/golang/groupcache
+  version: 02826c3e79038b59d737d3b1c0a1d937f71a4433
+  subpackages:
+  - lru
 - name: github.com/golang/mock
   version: c34cdb4725f4c3844d095133c6e40e448b86589b
   subpackages:
@@ -71,6 +84,10 @@ imports:
   - OpenAPIv2
   - compiler
   - extensions
+- name: github.com/hashicorp/golang-lru
+  version: a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4
+  subpackages:
+  - simplelru
 - name: github.com/howeyc/gopass
   version: bf9dde6d0d2c004a008c27aaee91170c786f6db8
 - name: github.com/imdario/mergo
@@ -126,6 +143,7 @@ imports:
   - project/v1
   - route/v1
   - template/v1
+  - user/v1
 - name: github.com/openshift/client-go
   version: 6a9817e0a0720dd8e837d1d18cd2938342ef6e54
   subpackages:
@@ -135,14 +153,32 @@ imports:
   - route/clientset/versioned/typed/route/v1
   - template/clientset/versioned/scheme
   - template/clientset/versioned/typed/template/v1
+  - user/clientset/versioned/scheme
+  - user/clientset/versioned/typed/user/v1
+- name: github.com/operator-framework/operator-sdk
+  version: fc9b6b1277b644d152534b22614351aa3d1405ba
+  subpackages:
+  - version
 - name: github.com/pkg/errors
-  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+  version: 059132a15dd08d6704c67711dae0cf35ab991756
 - name: github.com/satori/go.uuid
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/sirupsen/logrus
   version: 3e01752db0189b9157070a0e1668a620f9a85da2
 - name: github.com/spf13/pflag
   version: 583c0c0531f06d5278b7d917446061adc344b5cd
+- name: go.uber.org/atomic
+  version: 1ea20fb1cbb1cc08cbd0d913a96dead89aa18289
+- name: go.uber.org/multierr
+  version: 3c4937480c32f4c13a875a1829af76c98ca3d40a
+- name: go.uber.org/zap
+  version: 67bc79d13d155c02fd008f721863ff8cc5f30659
+  subpackages:
+  - buffer
+  - internal/bufferpool
+  - internal/color
+  - internal/exit
+  - zapcore
 - name: golang.org/x/crypto
   version: 81e90905daefcd6fd217b62423c0908922eadb30
   subpackages:
@@ -159,6 +195,7 @@ imports:
   version: 1c05540f6879653db88113bc4a2b70aec4bd491f
   subpackages:
   - context
+  - context/ctxhttp
   - html
   - html/atom
   - html/charset
@@ -167,6 +204,13 @@ imports:
   - idna
   - lex/httplex
   - websocket
+- name: golang.org/x/oauth2
+  version: a6bd8cefa1811bd24b86f8902872e4e8225f74c4
+  subpackages:
+  - google
+  - internal
+  - jws
+  - jwt
 - name: golang.org/x/sys
   version: 95c6576299259db960f6c5b9b69ea52422860fce
   subpackages:
@@ -197,10 +241,22 @@ imports:
   version: f51c12702a4d776e4c1fa9b0fabab841babae631
   subpackages:
   - rate
+- name: google.golang.org/appengine
+  version: 4a4468ece617fc8205e99368fa2200e9d1fad421
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
 - name: gopkg.in/inf.v0
   version: 3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4
 - name: gopkg.in/yaml.v2
-  version: 670d4cfef0544295bc27a114dbac37980d83185a
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
 - name: k8s.io/api
   version: 0f11257a8a25954878633ebdc9841c67d8f83bdb
   subpackages:
@@ -246,6 +302,7 @@ imports:
   - pkg/api/errors
   - pkg/api/meta
   - pkg/api/resource
+  - pkg/apis/meta/internalversion
   - pkg/apis/meta/v1
   - pkg/apis/meta/v1/unstructured
   - pkg/apis/meta/v1beta1
@@ -263,21 +320,26 @@ imports:
   - pkg/runtime/serializer/versioning
   - pkg/selection
   - pkg/types
+  - pkg/util/cache
   - pkg/util/clock
+  - pkg/util/diff
   - pkg/util/errors
   - pkg/util/framer
   - pkg/util/intstr
   - pkg/util/json
+  - pkg/util/mergepatch
   - pkg/util/net
   - pkg/util/rand
   - pkg/util/runtime
   - pkg/util/sets
+  - pkg/util/strategicpatch
   - pkg/util/validation
   - pkg/util/validation/field
   - pkg/util/wait
   - pkg/util/yaml
   - pkg/version
   - pkg/watch
+  - third_party/forked/golang/json
   - third_party/forked/golang/reflect
 - name: k8s.io/client-go
   version: 483aada58add12af1546a0f55e7a50493e8026f3
@@ -348,22 +410,30 @@ imports:
   - pkg/apis/clientauthentication/v1alpha1
   - pkg/version
   - plugin/pkg/client/auth/exec
+  - plugin/pkg/client/auth/gcp
   - rest
   - rest/watch
   - testing
+  - third_party/forked/golang/template
   - tools/auth
+  - tools/cache
   - tools/clientcmd
   - tools/clientcmd/api
   - tools/clientcmd/api/latest
   - tools/clientcmd/api/v1
   - tools/metrics
+  - tools/pager
+  - tools/record
   - tools/reference
   - transport
+  - util/buffer
   - util/cert
   - util/flowcontrol
   - util/homedir
   - util/integer
+  - util/jsonpath
   - util/retry
+  - util/workqueue
 - name: k8s.io/kube-aggregator
   version: e88bdebab831fbccbce7ef47d6f42d7b4cea2e96
   subpackages:
@@ -374,6 +444,32 @@ imports:
   - pkg/client/clientset_generated/clientset/scheme
   - pkg/client/clientset_generated/clientset/typed/apiregistration/v1
   - pkg/client/clientset_generated/clientset/typed/apiregistration/v1beta1
+- name: k8s.io/kube-openapi
+  version: 39cb288412c48cb533ba4be5d6c28620b9a0c1b4
+  subpackages:
+  - pkg/util/proto
+- name: sigs.k8s.io/controller-runtime
+  version: 67e28744a963c78a34108c3b52aadbc5e02f4384
+  subpackages:
+  - pkg/cache
+  - pkg/cache/internal
+  - pkg/client
+  - pkg/client/apiutil
+  - pkg/client/config
+  - pkg/controller
+  - pkg/event
+  - pkg/handler
+  - pkg/internal/controller
+  - pkg/internal/recorder
+  - pkg/manager
+  - pkg/predicate
+  - pkg/reconcile
+  - pkg/recorder
+  - pkg/runtime/inject
+  - pkg/runtime/log
+  - pkg/runtime/signals
+  - pkg/source
+  - pkg/source/internal
 testImports:
 - name: github.com/hpcloud/tail
   version: a1dbeea552b7c8df4b542c66073e393de198a800

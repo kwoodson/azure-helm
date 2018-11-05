@@ -42,3 +42,5 @@ import:
   - gomock
 - package: github.com/kelseyhightower/envconfig
   version: ^1.3.0
+- package: sigs.k8s.io/controller-runtime
+  version: v0.1.1
