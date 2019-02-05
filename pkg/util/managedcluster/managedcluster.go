@@ -8,7 +8,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	kapi "k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/tools/clientcmd/api/latest"
-	"k8s.io/client-go/tools/clientcmd/api/v1"
+	v1 "k8s.io/client-go/tools/clientcmd/api/v1"
 
 	"github.com/openshift/openshift-azure/pkg/api"
 )
@@ -36,6 +36,8 @@ func RestConfigFromV1Config(kc *v1.Config) (*rest.Config, error) {
 		return nil, err
 	}
 
-	kubeconfig := clientcmd.NewDefaultClientConfig(c, &clientcmd.ConfigOverrides{})
+	kubeconfig := clientcmd.NewDefaultClientConfig(c, &clientcmd.ConfigOverrides{
+		Timeout: "60s",
+	})
 	return kubeconfig.ClientConfig()
 }

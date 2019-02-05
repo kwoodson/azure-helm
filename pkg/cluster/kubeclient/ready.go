@@ -2,6 +2,7 @@ package kubeclient
 
 import (
 	"context"
+	"net"
 	"time"
 
 	"github.com/openshift/openshift-azure/pkg/api"
@@ -124,6 +125,9 @@ func (u *kubeclient) WaitForReadyMaster(ctx context.Context, computerName Comput
 
 func (u *kubeclient) masterIsReady(computerName ComputerName) (bool, error) {
 	r, err := ready.NodeIsReady(u.client.CoreV1().Nodes(), computerName.toKubernetes())()
+	if err, ok := err.(net.Error); ok && err.Timeout() {
+		return false, nil
+	}
 	if !r || err != nil {
 		return r, err
 	}

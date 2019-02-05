@@ -9,9 +9,14 @@ if [ -f "/etc/sysconfig/atomic-openshift-node" ]; then
 fi
 
 # remove registry certificate softlink from docker
-unlink /etc/docker/certs.d/registry.access.redhat.com/redhat-ca.crt 
+unlink /etc/docker/certs.d/registry.access.redhat.com/redhat-ca.crt
 
 if ! grep /var/lib/docker /etc/fstab; then
+  ps -ef | grep docker
+  docker info
+  cat /proc/partitions
+  systemctl status docker.service
+  journalctl --no-pager -u docker.server
   systemctl stop docker.service
   mkfs.xfs -f /dev/disk/azure/resource-part1
   echo '/dev/disk/azure/resource-part1  /var/lib/docker  xfs  grpquota  0 0' >>/etc/fstab
