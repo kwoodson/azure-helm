@@ -1,3 +1,4 @@
+# meaningless commit
 SHELL := /bin/bash
 GITCOMMIT=$(shell git describe --tags HEAD)$(shell [[ $$(git status --porcelain) = "" ]] || echo -dirty)
 LDFLAGS="-X main.gitCommit=$(GITCOMMIT)"
